@@ -2,17 +2,21 @@
   "scripts": {
     "asbuild:untouched": "asc assembly/index.ts -b build/untouched.wasm -t build/untouched.wat --sourceMap --validate --debug",
     "asbuild:optimized": "asc assembly/index.ts -b build/optimized.wasm -t build/optimized.wat --sourceMap --validate --optimize",
-    "asbuild": "npm run asbuild:untouched && npm run asbuild:optimized && node deploy.js"
+    "asbuild": "npm run asbuild:untouched && npm run asbuild:optimized && node deploy.js",
+    "execute": "npm run asbuild:untouched && node ./runtime.js"
   },
   "devDependencies": {
-    "assemblyscript": "github:AssemblyScript/assemblyscript",
     "ethereumjs-tx": "^2.1.1",
     "ipfs-mini": "^1.1.5"
   },
   "dependencies": {
+    "@wasmer/wasi": "^0.5.0",
+    "@wasmer/wasmfs": "^0.5.0",
+    "assemblyscript": "^0.8.0",
     "bignum": "github:MaxGraey/bignum.wasm",
     "ethers": "^4.0.37",
     "node-fetch": "^2.6.0",
+    "wasiassemblyscript": "file:../WasiAssemblyscript",
     "web3": "^1.2.1"
   }
 }

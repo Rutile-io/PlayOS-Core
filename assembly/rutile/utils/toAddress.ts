@@ -1,5 +1,6 @@
 import { u256 } from "../../../node_modules/bignum/assembly/integer/u256";
 import { print32 } from "../../utils/debug";
+import { debug } from "../Debug";
 
 export default function toAddress(address: u256): u8[] {
     const bytes = address.toBytes(true);
@@ -9,6 +10,7 @@ export default function toAddress(address: u256): u8[] {
 export function toAddressPointer(address: u256): i32 {
     const arr = toAddress(address);
     const ptr = changetype<usize>(arr.dataStart);
+    __retain(ptr);
 
     return ptr;
 }

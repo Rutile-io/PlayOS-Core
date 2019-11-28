@@ -5,6 +5,7 @@ const IPFS = require('ipfs-mini');
 const ethers = require('ethers');
 const EthereumTx = require('ethereumjs-tx').Transaction;
 const executeTransaction = require('./lib/executeTransaction');
+const config = require('./config');
 
 const ipfsConfig = {
     host: '127.0.0.1',
@@ -12,10 +13,9 @@ const ipfsConfig = {
     protocol: 'http',
 };
 
-const chainId = 866;
-const rutileUrl = 'http://localhost:8545';
-const privateKey = 'C0DEC0DEC0DEC0DEC0DEC0DEC0DEC0DEC0DEC0DEC0DEC0DEC0DEC0DEC0DEC0DE';
-const accountAddress = '0x53ae893e4b22d707943299a8d0c844df0e3d5557';
+const chainId = config.chainId;
+const rutileUrl = config.rutileUrl;
+const privateKey = config.privateKey;
 
 const wallet = new ethers.Wallet(privateKey, new ethers.providers.JsonRpcProvider(rutileUrl, {
     chainId,
@@ -36,18 +36,29 @@ function byteArrayToString(arr) {
 }
 
 
-function addToIpfs(file) {
-    return new Promise((resolve, reject) => {
-        const ipfs = new IPFS(ipfsConfig);
-
-        ipfs.add(file, (error, result) => {
-            if (error) {
-                return reject(error);
-            }
-
-            resolve(result);
-        });
+async function addToIpfs(file) {
+    // return new Promise((resolve, reject) => {
+    const response = await fetch(`${config.rutileUrl}/files/upload`, {
+        method: 'POST',
+        // headers: {
+        //     ''
+        // },
+        body: file,
     });
+
+    const data = (await response.json())[0].hash;
+    return data;
+
+    //     const ipfs = new IPFS(ipfsConfig);
+
+    //     ipfs.add(file, (error, result) => {
+    //         if (error) {
+    //             return reject(error);
+    //         }
+
+    //         resolve(result);
+    //     });
+    // });
 }
 
 function pollTransactionStatus(hash, ms) {
