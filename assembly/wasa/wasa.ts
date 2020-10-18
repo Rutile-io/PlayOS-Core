@@ -917,7 +917,7 @@ import {
      * @param i index
      */
     get(i: usize): string | null {
-      let args_len: usize = this.args[0].length;
+      let args_len: usize = this.args.length;
       if (i < args_len) {
         return this.args[i];
       }

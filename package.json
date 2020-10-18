@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "asbuild:untouched": "asc assembly/index.ts -b build/untouched.wasm -t build/untouched.wat --sourceMap --validate --debug",
-    "asbuild:optimized": "asc assembly/index.ts -b build/optimized.wasm -t build/optimized.wat --sourceMap --validate --optimize",
+    "asbuild:untouched": "asc assembly/index.ts -b build/untouched.wasm -t build/untouched.wat --sourceMap --validate --debug --use abort=assembly/index/abort",
+    "asbuild:optimized": "asc assembly/index.ts -b build/optimized.wasm -t build/optimized.wat --sourceMap --validate --optimize --use abort=assembly/index/abort",
     "asbuild": "npm run asbuild:untouched && npm run asbuild:optimized && node deploy.js",
     "execute": "npm run asbuild:untouched && node ./runtime.js"
   },
@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@wasmer/wasi": "^0.5.0",
+    "@wasmer/wasm-transformer": "^0.5.0",
     "@wasmer/wasmfs": "^0.5.0",
     "assemblyscript": "^0.8.0",
     "bignum": "github:MaxGraey/bignum.wasm",
