@@ -12,7 +12,7 @@
   "dependencies": {
     "bignum": "github:MaxGraey/bignum.wasm",
     "ethers": "^4.0.37",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "web3": "^1.2.1"
   }
 }
